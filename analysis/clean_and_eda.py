@@ -194,3 +194,41 @@ print(
     "were already treated as zero in Part 1 using COALESCE, "
     "and ratings are not used in the order-value calculation."
 )
+
+
+
+
+# ==========================================
+# Task 6: IQR Outlier Detection
+# ==========================================
+
+print("\nTASK 6: IQR OUTLIER DETECTION")
+
+# Calculate quartiles and IQR
+Q1 = merged["quantity"].quantile(0.25)
+Q3 = merged["quantity"].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+print("Q1:", Q1)
+print("Q3:", Q3)
+print("IQR:", IQR)
+print("Lower bound:", lower_bound)
+print("Upper bound:", upper_bound)
+
+# Flag outliers without deleting them
+merged["is_outlier"] = (
+    (merged["quantity"] < lower_bound) |
+    (merged["quantity"] > upper_bound)
+)
+
+outliers = merged.loc[
+    merged["is_outlier"],
+    ["order_id", "quantity"]
+]
+
+print("\nNumber of outliers:", len(outliers))
+print("\nOutlier orders:")
+print(outliers.to_string(index=False))
