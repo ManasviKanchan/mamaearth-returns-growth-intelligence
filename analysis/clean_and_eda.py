@@ -386,3 +386,79 @@ else:
         "is negligible. There is insufficient evidence "
         "that higher discounts reduce returns."
     )
+
+
+# ==========================================
+# Task 10: Monthly Revenue and Outlier Impact
+# ==========================================
+
+print("\nTASK 10: MONTHLY REVENUE TREND")
+
+# Convert order_date into datetime format
+merged["order_date"] = pd.to_datetime(merged["order_date"])
+
+# Create month column
+merged["month"] = merged["order_date"].dt.to_period("M")
+
+# Revenue including quantity outliers
+monthly_with_outliers = (
+    merged.groupby("month")["order_value"]
+    .sum()
+    .round(2)
+)
+
+# Revenue excluding flagged quantity outliers
+monthly_without_outliers = (
+    merged.loc[~merged["is_outlier"]]
+    .groupby("month")["order_value"]
+    .sum()
+    .round(2)
+)
+
+# Compare monthly revenue
+monthly_comparison = pd.DataFrame({
+    "including_outliers": monthly_with_outliers,
+    "excluding_outliers": monthly_without_outliers
+}).fillna(0)
+
+monthly_comparison["difference"] = (
+    monthly_comparison["including_outliers"]
+    - monthly_comparison["excluding_outliers"]
+).round(2)
+
+print("\nMonthly Revenue Comparison (Rs.):")
+print(monthly_comparison.to_string())
+
+# Identify peak months
+peak_with = monthly_with_outliers.idxmax()
+peak_without = monthly_without_outliers.idxmax()
+
+print("\nPeak month including outliers:", peak_with)
+print(
+    "Peak revenue including outliers: "
+    f"Rs. {monthly_with_outliers.max():.2f}"
+)
+
+print("\nPeak month excluding outliers:", peak_without)
+print(
+    "Peak revenue excluding outliers: "
+    f"Rs. {monthly_without_outliers.max():.2f}"
+)
+
+# Display flagged orders responsible for the distortion
+print("\nFlagged Outlier Orders:")
+print(
+    merged.loc[
+        merged["is_outlier"],
+        ["order_id", "order_date", "quantity", "order_value"]
+    ].to_string(index=False)
+)
+
+print(
+    "\nInterpretation: January appears to be the highest-revenue "
+    "month when quantity outliers are included. However, "
+    "two unusually large January orders (O0011 and O0098) "
+    "inflate its revenue. After excluding these flagged "
+    "orders, March becomes the true peak month in the "
+    "outlier-corrected analysis."
+)
