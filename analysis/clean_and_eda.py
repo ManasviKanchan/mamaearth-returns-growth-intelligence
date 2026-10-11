@@ -21,3 +21,34 @@ print(orders.head())
 
 print("\nMissing values:")
 print(orders.isnull().sum())
+
+
+# ==========================================
+# Task 2: Standardize Payment Method Casing
+# ==========================================
+
+print("\nTASK 2: PAYMENT METHOD STANDARDIZATION")
+
+# Before cleaning
+print("\nUnique payment methods BEFORE cleaning:")
+print(orders["payment_method"].unique())
+
+print("\nNumber of unique values BEFORE cleaning:")
+print(orders["payment_method"].nunique())
+
+# Standardize casing and remove extra spaces
+orders["payment_method"] = (
+    orders["payment_method"]
+    .str.strip()
+    .str.upper()
+)
+
+# After cleaning
+print("\nUnique payment methods AFTER cleaning:")
+print(orders["payment_method"].unique())
+
+print("\nNumber of unique values AFTER cleaning:")
+print(orders["payment_method"].nunique())
+
+print("\nPayment method counts:")
+print(orders["payment_method"].value_counts())
