@@ -38,13 +38,16 @@ mamaearth-returns-growth-intelligence/
 
 The SQL component establishes the relational database and provides queries for business reporting.
 
-**Execution order:**
 
-1. `sql/schema.sql` — Creates the required database tables.
-2. `sql/seed_data.sql` — Populates the tables with project data.
-3. `sql/reports.sql` — Runs SQL reports and analytical queries.
+**Database setup and execution order:**
 
-Execute these scripts in order using a compatible SQL environment.
+1. `sql/schema.sql` — Defines the SQLite database tables and foreign-key relationships.
+2. `sql/load_data.py` — Automatically creates `mamaearth.db` using the schema and imports the original CSV datasets.
+3. `sql/seed_data.sql` — Documents the data-loading process and provides SQL queries to verify imported records. It does not insert data.
+4. `sql/reports.sql` — Contains the SQL queries used for business reporting.
+
+The automated loader imports 45 customers, 16 products, and 180 original orders. It preserves the raw transactions for subsequent analysis.
+
 
 ### Raw Dataset Summary
 
@@ -160,15 +163,31 @@ cd mamaearth-returns-growth-intelligence
 pip install pandas numpy matplotlib seaborn google-genai
 ```
 
-### 3. Run the SQL Scripts
+### 3. Build and Verify the SQLite Database
 
-In your SQL environment, execute the files in this order:
+From the repository root, run:
+
+```bash
+python sql/load_data.py
+```
+
+This creates `mamaearth.db`, imports all three CSV files, and checks foreign-key integrity.
+
+Expected results:
 
 ```text
-sql/schema.sql
-sql/seed_data.sql
-sql/reports.sql
+customers: 45 rows imported
+products: 16 rows imported
+orders: 180 rows imported
+Foreign-key validation: PASS
 ```
+
+To run the SQL reports, open `mamaearth.db` using DB Browser for SQLite and execute the queries in `sql/reports.sql`.
+
+The verification queries in `sql/seed_data.sql` can also be executed against the populated database.
+
+**Note:** Running `sql/load_data.py` rebuilds the database and replaces any existing `mamaearth.db` in the repository root.
+
 
 ### 4. Run Data Cleaning and EDA
 
