@@ -71,3 +71,25 @@ WHERE customer_id NOT IN (
     FROM orders
 );
 
+
+
+-- Task 3(d): City-wise Return Rate Analysis
+-- Output:
+-- city      | total_orders | returned_orders | return_rate_pct
+-- Jaipur    | 19           | 8               | 42.1
+-- Lucknow   | 49           | 15              | 30.6
+-- Bangalore | 33           | 8               | 24.2
+
+SELECT
+    c.city,
+    COUNT(*) AS total_orders,
+    SUM(o.returned) AS returned_orders,
+    ROUND(100.0 * SUM(o.returned) / COUNT(*), 1)
+        AS return_rate_pct
+FROM orders o
+JOIN customers c
+    ON o.customer_id = c.customer_id
+GROUP BY c.city
+HAVING return_rate_pct > 20
+ORDER BY return_rate_pct DESC;
+
