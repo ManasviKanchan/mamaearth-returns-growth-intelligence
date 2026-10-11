@@ -52,3 +52,41 @@ print(orders["payment_method"].nunique())
 
 print("\nPayment method counts:")
 print(orders["payment_method"].value_counts())
+
+
+
+# ==========================================
+# Task 3: Detect and Remove Duplicate Orders
+# ==========================================
+
+print("\nTASK 3: DUPLICATE ORDER DETECTION")
+
+# Natural key excludes order_id
+natural_key = [
+    "customer_id",
+    "product_id",
+    "order_date",
+    "quantity",
+    "discount_pct",
+    "payment_method",
+    "rating",
+    "returned"
+]
+
+# Detect duplicate rows
+duplicate_mask = orders.duplicated(
+    subset=natural_key,
+    keep="first"
+)
+
+print("\nNumber of duplicate orders:")
+print(duplicate_mask.sum())
+
+print("\nDropped order IDs:")
+print(orders.loc[duplicate_mask, "order_id"].tolist())
+
+# Remove duplicates
+orders_clean = orders.loc[~duplicate_mask].copy()
+
+print("\nOrders shape after removing duplicates:")
+print(orders_clean.shape)
