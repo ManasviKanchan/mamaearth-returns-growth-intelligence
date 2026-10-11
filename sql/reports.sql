@@ -204,3 +204,21 @@ SELECT
 FROM customers
 WHERE name LIKE 'A%'
 ORDER BY customer_id;
+
+
+
+-- ==========================================
+-- Task 3(h): DISTINCT Acquisition Sources
+-- ==========================================
+
+-- Output:
+-- acquisition_source
+-- Ad
+-- Organic
+-- Referral
+-- Social
+
+SELECT DISTINCT
+    acquisition_source
+FROM customers
+ORDER BY acquisition_source;
