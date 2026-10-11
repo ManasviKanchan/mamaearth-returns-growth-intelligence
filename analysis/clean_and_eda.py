@@ -315,3 +315,74 @@ print(
     "this segment should be prioritized for "
     "further investigation."
 )
+
+
+# ==========================================
+# Task 9: Correlation Analysis
+# ==========================================
+
+print("\nTASK 9: CORRELATION ANALYSIS")
+
+# Select numeric variables
+correlation_columns = [
+    "rating", "returned", "discount_pct", "quantity"
+]
+
+# Calculate Pearson correlation matrix
+correlation_matrix = merged[correlation_columns].corr()
+
+print("\nCorrelation Matrix:")
+print(correlation_matrix.round(3))
+
+# Interpret correlation strength
+def correlation_strength(value):
+    absolute_value = abs(value)
+
+    if absolute_value < 0.20:
+        return "Negligible"
+    elif absolute_value < 0.40:
+        return "Weak"
+    elif absolute_value < 0.70:
+        return "Moderate"
+    else:
+        return "Strong"
+
+print("\nPairwise Correlation Interpretation:")
+
+for i in range(len(correlation_columns)):
+    for j in range(i + 1, len(correlation_columns)):
+        col1 = correlation_columns[i]
+        col2 = correlation_columns[j]
+
+        value = correlation_matrix.loc[col1, col2]
+        strength = correlation_strength(value)
+
+        print(
+            f"{col1} vs {col2}: "
+            f"r = {value:.3f} ({strength})"
+        )
+
+# Test discount-return hypothesis
+discount_return_corr = correlation_matrix.loc[
+    "discount_pct", "returned"
+]
+
+print("\nHypothesis: Higher discounts reduce returns.")
+
+print(
+    f"Discount vs Returned correlation: "
+    f"{discount_return_corr:.3f}"
+)
+
+if discount_return_corr <= -0.20:
+    print(
+        "Hypothesis Result: Supported by a "
+        "negative correlation."
+    )
+else:
+    print("\nHypothesis Result: Busted")
+    print(
+        "The relationship between discounts and returns "
+        "is negligible. There is insufficient evidence "
+        "that higher discounts reduce returns."
+    )
