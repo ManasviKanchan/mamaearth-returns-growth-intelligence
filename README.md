@@ -1,8 +1,8 @@
-Mamaearth Returns & Growth Intelligence
+# Mamaearth Returns & Growth Intelligence
 
-An end-to-end retail analytics capstone project using SQL, Python, data visualization, and Generative AI to investigate revenue performance, customer returns, data quality, and operational risks.
+An end-to-end retail analytics capstone project using **SQL, Python, data visualization, and Generative AI** to investigate revenue performance, customer returns, data quality, and operational risks.
 
-Project Objectives
+## Project Objectives
 
 - Build a relational SQL database for retail transactions.
 - Analyze revenue, return patterns, and payment-method performance.
@@ -11,8 +11,9 @@ Project Objectives
 - Generate a business narrative using Google's Gemini API.
 - Provide a deterministic offline narrative when the API is unavailable.
 
-Project Structure
+## Project Structure
 
+```text
 mamaearth-returns-growth-intelligence/
 ├── data/
 │   └── CSV datasets
@@ -31,21 +32,21 @@ mamaearth-returns-growth-intelligence/
 │   ├── generate_narrative.py
 │   └── sample_output.txt
 └── README.md
+```
 
-
- Part 1: SQL Database and Reporting
+## Part 1: SQL Database and Reporting
 
 The SQL component establishes the relational database and provides queries for business reporting.
 
-Execution order:
+**Execution order:**
 
-1. sql/schema.sql — Creates the required database tables.
-2. sql/seed_data.sql — Populates the tables with project data.
-3. sql/reports.sql — Runs SQL reports and analytical queries.
+1. `sql/schema.sql` — Creates the required database tables.
+2. `sql/seed_data.sql` — Populates the tables with project data.
+3. `sql/reports.sql` — Runs SQL reports and analytical queries.
 
 Execute these scripts in order using a compatible SQL environment.
 
-Raw Dataset Summary
+### Raw Dataset Summary
 
 | Metric | Value |
 |---|---:|
@@ -54,11 +55,11 @@ Raw Dataset Summary
 | Products | 16 |
 | Raw revenue | ₹99,860.20 |
 
-Part 2: Python Data Cleaning, EDA and Visualization
+## Part 2: Python Data Cleaning, EDA and Visualization
 
-Data Cleaning and Exploratory Analysis
+### Data Cleaning and Exploratory Analysis
 
-Script: analysis/clean_and_eda.py
+Script: `analysis/clean_and_eda.py`
 
 The analysis includes:
 
@@ -71,7 +72,7 @@ The analysis includes:
 
 The script also exports structured findings to `narrator/findings.json`, allowing the narrative generator to use verified analytical results.
 
-Key Findings
+### Key Findings
 
 | Metric | Result |
 |---|---:|
@@ -90,20 +91,20 @@ January 2026 initially showed revenue of ₹29,582.10. After excluding flagged q
 
 These findings indicate patterns worth investigating; they do not establish causal relationships.
 
-Visualizations
+### Visualizations
 
-Script: analysis/visualize.py
+Script: `analysis/visualize.py`
 
 The project generates:
 
-- visualizations/monthly_revenue_trend.png
-- visualizations/return_rate_by_payment.png
+- `visualizations/monthly_revenue_trend.png`
+- `visualizations/return_rate_by_payment.png`
 
 These charts illustrate monthly revenue performance and differences in return rates across payment methods.
 
-Part 3: Generative AI Business Narrative
+## Part 3: Generative AI Business Narrative
 
-Script: narrator/generate_narrative.py
+Script: `narrator/generate_narrative.py`
 
 The narrative generator uses the **Situation–Complication–Resolution (SCR)** framework to translate analytical findings into a report for regional operations and finance stakeholders.
 
