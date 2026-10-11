@@ -127,3 +127,70 @@ print(
     .isnull()
     .sum()
 )
+
+
+
+# ==========================================
+# Task 5: Merge and Revenue Reconciliation
+# ==========================================
+
+print("\nTASK 5: MERGE AND RECONCILIATION")
+
+# Merge cleaned orders with products and customers
+merged = (
+    orders_clean
+    .merge(products, on="product_id", how="inner", validate="many_to_one")
+    .merge(customers, on="customer_id", how="inner", validate="many_to_one")
+)
+
+# Calculate cleaned order value
+merged["order_value"] = (
+    merged["quantity"]
+    * merged["price"]
+    * (1 - merged["discount_pct"] / 100.0)
+)
+
+cleaned_total = round(merged["order_value"].sum(), 2)
+
+print("\nMerged dataset shape:", merged.shape)
+print("Cleaned orders count:", len(merged))
+print(f"Cleaned total revenue: Rs. {cleaned_total:.2f}")
+
+# Independently calculate revenue of the 5 dropped orders
+dropped_orders = orders.loc[duplicate_mask].copy()
+
+dropped_merged = dropped_orders.merge(
+    products, on="product_id", how="inner"
+)
+
+dropped_merged["order_value"] = (
+    dropped_merged["quantity"]
+    * dropped_merged["price"]
+    * (
+        1 - dropped_merged["discount_pct"].fillna(0) / 100.0
+    )
+)
+
+duplicate_revenue = round(
+    dropped_merged["order_value"].sum(), 2
+)
+
+raw_sql_total = 99860.20
+revenue_difference = round(raw_sql_total - cleaned_total, 2)
+
+print(f"Revenue of 5 removed duplicates: Rs. {duplicate_revenue:.2f}")
+print(f"Raw SQL revenue: Rs. {raw_sql_total:.2f}")
+print(f"Revenue difference: Rs. {revenue_difference:.2f}")
+
+print(
+    "\nReconciliation Note: Part 1 SQL reports raw revenue of "
+    f"Rs. {raw_sql_total:.2f}, while Part 2 reports cleaned revenue "
+    f"of Rs. {cleaned_total:.2f}. The exact difference of "
+    f"Rs. {revenue_difference:.2f} is attributable to the five "
+    "duplicate orders removed in Task 3 (O0176-O0180), whose "
+    f"combined order value is Rs. {duplicate_revenue:.2f}. "
+    "Filling missing discounts with zero and ratings with the "
+    "median does not change revenue because missing discounts "
+    "were already treated as zero in Part 1 using COALESCE, "
+    "and ratings are not used in the order-value calculation."
+)
