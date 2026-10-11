@@ -93,3 +93,60 @@ GROUP BY c.city
 HAVING return_rate_pct > 20
 ORDER BY return_rate_pct DESC;
 
+
+
+-- ==========================================
+-- Task 3(e): Customer Spending Rankings
+-- ==========================================
+
+-- Query 1: Top 5 Customers by Total Spending
+-- Output:
+-- customer_id | name    | total_spend
+-- C043        | Reyansh | 12920.00
+-- C026        | Isha    | 8371.60
+-- C008        | Meera   | 4564.60
+-- C011        | Arjun   | 4111.00
+-- C042        | Sanya   | 3785.00
+
+-- customer_id ASC ensures consistent ranking
+-- when customers have the same total spending.
+
+SELECT
+    c.customer_id,
+    c.name,
+    ROUND(SUM(
+        o.quantity * p.price *
+        (1 - COALESCE(o.discount_pct, 0) / 100.0)
+    ), 2) AS total_spend
+FROM orders o
+JOIN products p
+    ON o.product_id = p.product_id
+JOIN customers c
+    ON o.customer_id = c.customer_id
+GROUP BY c.customer_id, c.name
+ORDER BY total_spend DESC, c.customer_id ASC
+LIMIT 5;
+
+
+-- Query 2: Customers Ranked 3 to 5
+-- Output:
+-- customer_id | name  | total_spend
+-- C008        | Meera | 4564.60
+-- C011        | Arjun | 4111.00
+-- C042        | Sanya | 3785.00
+
+SELECT
+    c.customer_id,
+    c.name,
+    ROUND(SUM(
+        o.quantity * p.price *
+        (1 - COALESCE(o.discount_pct, 0) / 100.0)
+    ), 2) AS total_spend
+FROM orders o
+JOIN products p
+    ON o.product_id = p.product_id
+JOIN customers c
+    ON o.customer_id = c.customer_id
+GROUP BY c.customer_id, c.name
+ORDER BY total_spend DESC, c.customer_id ASC
+LIMIT 3 OFFSET 2;
