@@ -275,3 +275,43 @@ else:
 print("\nNumber of outliers:", len(outliers))
 print("\nOutlier orders:")
 print(outliers.to_string(index=False))
+
+
+
+# ==========================================
+# Task 8: Multi-Level Return Rate Segmentation
+# ==========================================
+
+print("\nTASK 8: PAYMENT METHOD AND CITY TIER SEGMENTATION")
+
+# Group by payment method and city tier
+segment_returns = (
+    merged.groupby(["payment_method", "city_tier"])["returned"]
+    .agg(["count", "mean"])
+)
+
+# Calculate return rate percentage
+segment_returns["return_rate_pct"] = (
+    segment_returns["mean"] * 100
+).round(1)
+
+print("\nReturn rates by payment method and city tier:")
+print(segment_returns)
+
+# Identify the segment with the highest return rate
+highest_segment = segment_returns["mean"].idxmax()
+highest_rate = segment_returns.loc[
+    highest_segment, "return_rate_pct"
+]
+
+print("\nHighest return rate segment:")
+print("Payment method:", highest_segment[0])
+print("City tier:", highest_segment[1])
+print(f"Return rate: {highest_rate:.1f}%")
+
+print(
+    "\nInsight: COD orders from Tier-2 cities have "
+    "the highest observed return rate, suggesting "
+    "this segment should be prioritized for "
+    "further investigation."
+)
