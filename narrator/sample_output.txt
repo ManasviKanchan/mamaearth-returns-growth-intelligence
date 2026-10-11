@@ -1,8 +1,11 @@
 Situation
-Mamaearth's cleaned order data records total revenue of INR 97,358.30, compared with raw revenue of INR 99,860.20. After excluding the identified quantity outliers from the monthly trend, March 2026 is the true peak month, with revenue of INR 20,318.90.
+
+Regional operations and finance teams analyzed recent financial and logistical performance metrics. True peak month performance occurred in March 2026, generating a revenue of 20318.9 INR. Across the broader operating window, raw total revenue reached 99860.2 INR, which included a duplicate reconciliation delta of 2501.9 INR, yielding a cleaned total revenue of 97358.3 INR. 
 
 Complication
-Duplicate orders account for a reconciliation difference of INR 2,501.90 between raw and cleaned revenue. Returns also vary across payment methods: COD has a return rate of 44.4%, compared with 14.7% for CARD and 18.9% for UPI. The highest-risk observed segment is COD in Tier-2 cities, with a 54.5% return rate. January's apparent revenue of INR 29,582.10 falls to INR 11,637.10 when quantity outliers are excluded from the monthly trend.
+
+Significant fulfillment risks emerged around payment methods and order channels. Return rates varied widely by payment type, with CARD at 14.7 percent, UPI at 18.9 percent, and COD at 44.4 percent. The highest risk segment was isolated to COD orders in city tier 2, registering an alarming return rate of 54.5 percent. Additionally, data integrity issues distorted monthly trends; January 2026 appeared as an apparent revenue peak of 29582.1 INR due to anomalies, but outlier-corrected monthly revenue for January 2026 stood at 11637.1 INR. Analysts note that observed associations do not prove causation.
 
 Resolution
-Mamaearth should prioritize reviewing COD return patterns, especially in Tier-2 cities, and investigate possible operational causes before changing policy. Finance teams should reconcile duplicates before reporting revenue and compare monthly performance with and without flagged quantity outliers. These actions can improve reporting reliability and help operations teams target further investigation. The observed associations do not, by themselves, establish causation.
+
+To improve regional logistics and financial forecasting, operations teams should prioritize investigating the high return rates associated with cash-on-delivery orders, particularly in Tier-2 cities. Before implementing policy changes, teams should examine potential operational causes and evaluate targeted interventions. Finance teams should consistently reconcile duplicate transactions and use cleaned revenue of 97358.3 INR for reporting. Monthly performance should be evaluated using outlier-corrected figures, including January 2026 revenue of 11637.1 INR, to avoid misleading conclusions from unusual order quantities.
