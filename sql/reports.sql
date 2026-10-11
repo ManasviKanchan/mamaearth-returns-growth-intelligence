@@ -178,3 +178,29 @@ JOIN customers c
     ON o.customer_id = c.customer_id
 GROUP BY p.category
 ORDER BY category_revenue DESC;
+
+
+
+-- ==========================================
+-- Task 3(g): LIKE Pattern Matching
+-- ==========================================
+
+-- Output:
+-- customer_id | name
+-- C001        | Aarav
+-- C003        | Aditi
+-- C004        | Ananya
+-- C011        | Arjun
+-- C021        | Aryan
+-- C030        | Anika
+-- C031        | Aditya
+-- C036        | Aisha
+-- C041        | Ayaan
+-- C044        | Aria
+
+SELECT
+    customer_id,
+    name
+FROM customers
+WHERE name LIKE 'A%'
+ORDER BY customer_id;
