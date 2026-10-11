@@ -80,6 +80,11 @@ def generate_scr_narrative(findings: dict) -> dict:
         "outlier-corrected monthly revenue. Explain that observed "
         "associations do not prove causation. Include all verified "
         "revenue, return-rate, risk-segment, and peak-month findings."
+        "Always write month names in full, for example "
+        "March 2026 instead of 2026-03. "
+        "Include the true peak month and its revenue "
+        "together in the Situation section. "
+
     )
 
     # The prompt is built from the argument, not fixed numbers.
