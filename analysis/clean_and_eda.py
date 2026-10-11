@@ -462,3 +462,86 @@ print(
     "orders, March becomes the true peak month in the "
     "outlier-corrected analysis."
 )
+
+
+
+
+
+
+# ==========================================
+# PART 3 - TASK 1: EXPORT VERIFIED FINDINGS
+# ==========================================
+
+import json
+from pathlib import Path
+
+print("\nPART 3 - TASK 1: EXPORT FINDINGS")
+
+# Locate repository root independently of
+# the directory from which the script runs.
+BASE_DIR = Path(__file__).resolve().parent.parent
+NARRATOR_DIR = BASE_DIR / "narrator"
+
+NARRATOR_DIR.mkdir(parents=True, exist_ok=True)
+
+# Build findings directly from computed
+# Part 2 analysis results.
+
+findings = {
+    "cleaned_total_revenue_inr": round(
+        float(merged["order_value"].sum()), 2
+    ),
+
+    "raw_total_revenue_inr": round(
+        float(merged["order_value"].sum()
+              + duplicate_revenue), 2
+    ),
+
+    "duplicate_reconciliation_delta_inr": round(
+        float(duplicate_revenue), 2
+    ),
+
+    "return_rate_by_payment": {
+        method: round(float(rate), 1)
+        for method, rate in (
+            payment_returns["mean"] * 100
+        ).items()
+    },
+
+    "highest_risk_segment": {
+        "payment_method": str(highest_segment[0]),
+        "city_tier": int(highest_segment[1]),
+        "return_rate_pct": round(
+            float(highest_rate), 1
+        )
+    },
+
+    "true_peak_month": {
+        "month": str(peak_without),
+        "revenue_inr": round(
+            float(monthly_without_outliers.max()), 2
+        )
+    },
+
+    "outlier_inflated_month": {
+        "month": str(peak_with),
+        "apparent_revenue_inr": round(
+            float(monthly_with_outliers.max()), 2
+        ),
+        "corrected_revenue_inr": round(
+            float(monthly_without_outliers.loc[peak_with]), 2
+        )
+    }
+}
+
+# Export structured JSON
+output_path = NARRATOR_DIR / "findings.json"
+
+with open(output_path, "w", encoding="utf-8") as file:
+    json.dump(findings, file, indent=4)
+
+print(f"\nFindings exported to: {output_path}")
+print("\nGenerated JSON:")
+print(json.dumps(findings, indent=4))
+
+print("\nPART 3 TASK 1 COMPLETED")
