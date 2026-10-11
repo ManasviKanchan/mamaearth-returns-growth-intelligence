@@ -90,3 +90,40 @@ orders_clean = orders.loc[~duplicate_mask].copy()
 
 print("\nOrders shape after removing duplicates:")
 print(orders_clean.shape)
+
+
+
+# ==========================================
+# Task 4: Impute Missing Values
+# ==========================================
+
+print("\nTASK 4: MISSING VALUE IMPUTATION")
+
+# Count missing values after duplicate removal
+missing_discounts = orders_clean["discount_pct"].isna().sum()
+missing_ratings = orders_clean["rating"].isna().sum()
+
+print("\nMissing discounts before imputation:", missing_discounts)
+print("Missing ratings before imputation:", missing_ratings)
+
+# Calculate median rating before filling missing values
+median_rating = orders_clean["rating"].median()
+print("\nMedian rating before imputation:", median_rating)
+
+# Fill missing discounts with 0
+orders_clean["discount_pct"] = (
+    orders_clean["discount_pct"].fillna(0)
+)
+
+# Fill missing ratings with median
+orders_clean["rating"] = (
+    orders_clean["rating"].fillna(median_rating)
+)
+
+# Verify missing values after imputation
+print("\nMissing values after imputation:")
+print(
+    orders_clean[["discount_pct", "rating"]]
+    .isnull()
+    .sum()
+)
