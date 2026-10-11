@@ -229,6 +229,49 @@ outliers = merged.loc[
     ["order_id", "quantity"]
 ]
 
+
+
+# ==========================================
+# Task 7: Hypothesis Testing - COD Returns
+# ==========================================
+
+print("\nTASK 7: COD RETURN RATE HYPOTHESIS")
+
+print(
+    "Hypothesis: COD orders have a higher return "
+    "rate than CARD and UPI orders."
+)
+
+# Calculate return rates by payment method
+payment_returns = (
+    merged.groupby("payment_method")["returned"]
+    .agg(["count", "mean"])
+)
+
+# Convert mean to percentage
+payment_returns["return_rate_pct"] = (
+    payment_returns["mean"] * 100
+).round(1)
+
+print("\nReturn rates by payment method:")
+print(payment_returns)
+
+# Verify hypothesis
+cod_rate = payment_returns.loc["COD", "mean"]
+other_rates = payment_returns.loc[
+    ["CARD", "UPI"], "mean"
+]
+
+if (cod_rate > other_rates).all():
+    print("\nHypothesis Result: Confirmed")
+    print(
+        "COD has the highest return rate among "
+        "all payment methods."
+    )
+else:
+    print("\nHypothesis Result: Busted")
+
+
 print("\nNumber of outliers:", len(outliers))
 print("\nOutlier orders:")
 print(outliers.to_string(index=False))
