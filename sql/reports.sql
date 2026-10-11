@@ -222,3 +222,34 @@ SELECT DISTINCT
     acquisition_source
 FROM customers
 ORDER BY acquisition_source;
+
+
+
+-- ==========================================
+-- Task 3(i): ALTER TABLE + CASE
+-- ==========================================
+
+-- Step 1: Add loyalty_tier column
+ALTER TABLE customers
+ADD COLUMN loyalty_tier VARCHAR(10);
+
+-- Step 2: Assign loyalty tiers
+UPDATE customers
+SET loyalty_tier =
+    CASE
+        WHEN city_tier = 1 THEN 'Gold'
+        ELSE 'Silver'
+    END;
+
+-- Step 3: Verify loyalty tier distribution
+-- Output:
+-- loyalty_tier | customer_count
+-- Gold         | 28
+-- Silver       | 17
+
+SELECT
+    loyalty_tier,
+    COUNT(*) AS customer_count
+FROM customers
+GROUP BY loyalty_tier
+ORDER BY loyalty_tier;
