@@ -150,3 +150,31 @@ JOIN customers c
 GROUP BY c.customer_id, c.name
 ORDER BY total_spend DESC, c.customer_id ASC
 LIMIT 3 OFFSET 2;
+
+
+
+-- ==========================================
+-- Task 3(f): Category-wise Revenue Analysis
+-- ==========================================
+
+-- Output:
+-- category     | order_count | category_revenue
+-- Haircare     | 54          | 44956.10
+-- Skincare     | 60          | 27346.00
+-- Babycare     | 30          | 16805.00
+-- PersonalCare | 36          | 10753.10
+
+SELECT
+    p.category,
+    COUNT(*) AS order_count,
+    ROUND(SUM(
+        o.quantity * p.price *
+        (1 - COALESCE(o.discount_pct, 0) / 100.0)
+    ), 2) AS category_revenue
+FROM orders o
+JOIN products p
+    ON o.product_id = p.product_id
+JOIN customers c
+    ON o.customer_id = c.customer_id
+GROUP BY p.category
+ORDER BY category_revenue DESC;
