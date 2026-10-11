@@ -96,7 +96,7 @@ def generate_scr_narrative(findings: dict) -> dict:
         )
 
         response = client.models.generate_content(
-            model="gemini-3.1-flash-lite",
+            model="gemini-flash-lite-latest",
             contents=user_prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
