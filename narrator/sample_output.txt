@@ -1,0 +1,8 @@
+Situation
+Mamaearth's cleaned order data records total revenue of INR 97,358.30, compared with raw revenue of INR 99,860.20. After excluding the identified quantity outliers from the monthly trend, March 2026 is the true peak month, with revenue of INR 20,318.90.
+
+Complication
+Duplicate orders account for a reconciliation difference of INR 2,501.90 between raw and cleaned revenue. Returns also vary across payment methods: COD has a return rate of 44.4%, compared with 14.7% for CARD and 18.9% for UPI. The highest-risk observed segment is COD in Tier-2 cities, with a 54.5% return rate. January's apparent revenue of INR 29,582.10 falls to INR 11,637.10 when quantity outliers are excluded from the monthly trend.
+
+Resolution
+Mamaearth should prioritize reviewing COD return patterns, especially in Tier-2 cities, and investigate possible operational causes before changing policy. Finance teams should reconcile duplicates before reporting revenue and compare monthly performance with and without flagged quantity outliers. These actions can improve reporting reliability and help operations teams target further investigation. The observed associations do not, by themselves, establish causation.
