@@ -1,3 +1,16 @@
+-- AUTOMATED DATA LOADING (RECOMMENDED)
+--
+-- This file documents the CSV loading process and
+-- contains SQL queries for verifying imported records.
+-- It does not directly insert data.
+--
+-- To build the SQLite database automatically, run:
+--
+-- python sql/load_data.py
+--
+-- This command creates mamaearth.db, imports all
+-- three CSV datasets, and validates foreign keys.
+--
 
 -- Mamaearth Returns & Growth Intelligence Pipeline
 -- Part 1: Data loading instructions
